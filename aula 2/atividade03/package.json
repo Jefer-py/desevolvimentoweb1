@@ -1,0 +1,17 @@
+{
+  "name": "atividade03",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "mysql2": "^3.23.3",
+    "readline-sync": "^1.4.10"
+  }
+}
