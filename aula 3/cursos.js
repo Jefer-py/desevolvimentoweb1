@@ -9,25 +9,25 @@ const conexao = mysql.createPool({
 });
 
 async function cadastrar() {
-    console.log("\n===== CADASTRO DE FILMES =====");
+    console.log("\n===== CADASTRO DE CURSOS =====");
 
-    const nome = readline.question("Nome do filme: ");
+    const nome = readline.question("Nome do curso: ");
 
     const sql = `
-        INSERT INTO filmes  
+        INSERT INTO cursos  
         (nome,genero)
         VALUES (?, ?)
     `;
 
     if (nome.trim() === "") {
-        console.log("\nNome do filme é obrigatório.");
+        console.log("\nNome do curso é obrigatório.");
         return;
     }
 
-    const genero = readline.question("Gênero do filme: ");
+    const genero = readline.question("Gênero do curso: ");
 
     if (genero.trim() === "") {
-        console.log("\nGênero do filme é obrigatório.");
+        console.log("\nGênero do curso é obrigatório.");
         return;
     }
 
@@ -37,52 +37,52 @@ async function cadastrar() {
             genero
         ]);
 
-        console.log("\nFilme cadastrado com sucesso!");
+        console.log("\nCurso cadastrado com sucesso!");
     } catch (erro) {
-        console.log("\nErro ao cadastrar filme:", erro.message);
+        console.log("\nErro ao cadastrar curso:", erro.message);
     }
 }
 
 async function listar() {
-    const sql = "SELECT * FROM filmes";
+    const sql = "SELECT * FROM cursos";
 
     try {
-        const [filmes] = await conexao.execute(sql);
+        const [cursos] = await conexao.execute(sql);
 
-        if (filmes.length === 0) {
-            console.log("\nNenhum filme cadastrado.");
+        if (cursos.length === 0) {
+            console.log("\nNenhum curso cadastrado.");
             return;
         }
 
-        console.log("\n===== LISTA DE FILMES =====");
+        console.log("\n===== LISTA DE CURSOS =====");
 
-        filmes.forEach((filme) => {
+        cursos.forEach((curso) => {
             console.log(
-                `${filme.id} - ${filme.nome} - ${filme.genero}`
+                `${curso.id} - ${curso.nome} - ${curso.genero}`
             );
         });
     } catch (erro) {
-        console.log("\nErro ao listar filmes:", erro.message);
+        console.log("\nErro ao listar cursos:", erro.message);
     }
 }
 
 async function excluir() {
-    const id = readline.questionInt("\nDigite o ID do filme: ");
+    const id = readline.questionInt("\nDigite o ID do curso: ");
 
     try {
-        const sqlConsulta = "SELECT * FROM filmes WHERE id = ?";
-        const [filmes] = await conexao.execute(sqlConsulta, [id]);
+        const sqlConsulta = "SELECT * FROM cursos WHERE id = ?";
+        const [cursos] = await conexao.execute(sqlConsulta, [id]);
 
-        if (filmes.length === 0) {
-            console.log("\nFilme não encontrado.");
+        if (cursos.length === 0) {
+            console.log("\nCurso não encontrado.");
             return;
         }
 
-        const filme = filmes[0];
+        const curso = cursos[0];
 
         console.log("\n===== REGISTRO ENCONTRADO =====");
-        console.log(`Nome: ${filme.nome}`);
-        console.log(`Gênero: ${filme.genero}`);
+        console.log(`Nome: ${curso.nome}`);
+        console.log(`Gênero: ${curso.genero}`);
 
         const confirmacao = readline
             .question("\nDeseja excluir? (S/N): ")
@@ -93,16 +93,16 @@ async function excluir() {
             return;
         }
 
-        const sqlDelete = "DELETE FROM filmes WHERE id = ?";
+        const sqlDelete = "DELETE FROM cursos WHERE id = ?";
         const [resultado] = await conexao.execute(sqlDelete, [id]);
 
         if (resultado.affectedRows > 0) {
-            console.log("\nFilme excluído com sucesso!");
+            console.log("\nCurso excluído com sucesso!");
         } else {
-            console.log("\nNão foi possível excluir o filme.");
+            console.log("\nNão foi possível excluir o curso.");
         }
     } catch (erro) {
-        console.log("\nErro ao excluir filme:", erro.message);
+        console.log("\nErro ao excluir curso:", erro.message);
     }
 }
 
@@ -111,11 +111,11 @@ async function menu() {
 
     do {
         console.log(`
-===== FILMES =====
+===== CURSOS =====
 
-1 - Cadastrar filme
-2 - Listar filmes
-3 - Excluir filme
+1 - Cadastrar curso
+2 - Listar cursos
+3 - Excluir curso
 0 - Sair
 `);
 
