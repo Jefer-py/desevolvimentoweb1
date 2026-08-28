@@ -5,7 +5,7 @@ const conexao = mysql.createPool({
     host: "localhost",
     user: "root",
     password: "root",
-    database: "atividade03"
+    database: "atividade4"
 });
 
 async function cadastrar() {
